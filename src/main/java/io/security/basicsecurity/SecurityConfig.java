@@ -49,11 +49,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         response.sendRedirect("/login");
                     }
                 })
-            .and()
+                .and()
                 .rememberMe()// 기능 사용을 명시
                 .rememberMeParameter("remeber") // 파라미터 이름 적용
                 .tokenValiditySeconds(3600) // 초 단위로 설정
                 .userDetailsService(userDetailsService);
+        http
+                .sessionManagement()
+                .maximumSessions(1)
+                .maxSessionsPreventsLogin(true) // 세션 초과시 최대 허용갯수 초과시 로그인을 실패하게 만든다
+                ;
 
     }
 }
